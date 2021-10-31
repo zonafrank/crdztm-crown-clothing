@@ -10,7 +10,10 @@ function SignIn() {
   function handleGoogleSignIn(e) {
     e.preventDefault();
     signInWithGoogle()
-      .then((response) => console.log)
+      .then((response) => {
+        console.log(response)
+        setLoginData({email: "", password: ""})
+      })
       .catch((err) => console.log);
   }
 
@@ -24,7 +27,6 @@ function SignIn() {
     setLoginData({ ...loginData, [name]: value });
   }
 
-  console.log(loginData);
   return (
     <div className="sign-in">
       <h2>I already have an account</h2>

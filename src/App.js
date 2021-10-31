@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import './App.css';
-import Header from './components/header/header.component';
-import { auth } from "./firebase/firebase.utils";
-import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
-import SignInAndSignUpPage from './pages/signin-and-signup/signin-and-signup.component';
+import "./App.css";
+import Header from "./components/header/header.component";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import HomePage from "./pages/homepage/homepage.component";
+import ShopPage from "./pages/shop/shop.component";
+import SignInAndSignUpPage from "./pages/signin-and-signup/signin-and-signup.component";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-    })
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot((snapshot) => {
+          setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data(),
+          });
+        });
+      } else {
+        setCurrentUser(null)
+      }
+    });
 
     return () => unsubscribeFromAuth();
-  }, [])
+  }, []);
 
-  useEffect(() => {
-    if (!currentUser) {
+  console.log(currentUser);
 
-    }
-  }, [currentUser])
-
-  console.log(currentUser)
-  
   return (
     <div className="App">
       <Header currentUser={currentUser} />
@@ -34,7 +38,6 @@ function App() {
         <Route path="/shop" component={ShopPage} />
         <Route path="/signin" component={SignInAndSignUpPage} />
       </Switch>
-      
     </div>
   );
 }
