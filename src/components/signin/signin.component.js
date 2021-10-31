@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input-component";
 import "./signin.styles.scss";
@@ -17,9 +17,16 @@ function SignIn() {
       .catch((err) => console.log);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("submit button clicked.");
+    const {email, password} = loginData;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password)
+      setLoginData({email: "", password: ""})
+    } catch (error) {
+      console.log(error) 
+    }
   }
 
   function handleChange(e) {
@@ -39,7 +46,7 @@ function SignIn() {
           name="email"
           value={loginData.email}
           required
-          id="email"
+          id="login-email"
           handleChange={handleChange}
         />
         <FormInput
@@ -48,7 +55,7 @@ function SignIn() {
           name="password"
           value={loginData.password}
           required
-          id="password"
+          id="login-password"
           handleChange={handleChange}
         />
 

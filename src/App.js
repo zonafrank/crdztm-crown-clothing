@@ -9,7 +9,8 @@ import SignInAndSignUpPage from "./pages/signin-and-signup/signin-and-signup.com
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
-
+  // console.log(currentUser)
+  
   useEffect(() => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
