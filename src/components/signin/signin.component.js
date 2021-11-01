@@ -11,7 +11,7 @@ function SignIn() {
     e.preventDefault();
     signInWithGoogle()
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         setLoginData({email: "", password: ""})
       })
       .catch((err) => console.log);
@@ -61,7 +61,7 @@ function SignIn() {
 
         <div className="buttons">
           <CustomButton type="submit">Sign In</CustomButton>
-          <CustomButton onClick={handleGoogleSignIn} isGoogleSignIn>
+          <CustomButton type="button" onClick={handleGoogleSignIn} isGoogleSignIn>
             Sign In With Google
           </CustomButton>
         </div>
