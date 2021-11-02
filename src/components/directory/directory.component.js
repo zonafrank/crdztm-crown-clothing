@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MenuItem from '../menu-item/menu-item.component';
 import "./directory.styles.scss";
 
-const initialState = [
+const sections = [
   {
     title: 'hats',
     imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
@@ -38,7 +38,6 @@ const initialState = [
 ];
 
 function Directory() {
-  const [sections, setSections] = useState(initialState)
   return (
     <div className="directory-menu">
       {sections.map(({id, ...otherSectionProps}) => {

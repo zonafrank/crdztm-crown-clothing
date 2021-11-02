@@ -25,7 +25,7 @@ function SignUp() {
         state.password
       );
 
-      const userRef = await createUserProfileDocument(user, {
+      await createUserProfileDocument(user, {
         displayName: state.displayName,
       });
 
