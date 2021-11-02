@@ -1,5 +1,10 @@
-import { TOGGLE_CART_HIDDEN } from "./cart.types";
+import cartActionTypes from "./cart.types";
 
 export function toggleCartHidden() {
-  return { type: TOGGLE_CART_HIDDEN };
+  console.log(cartActionTypes.TOGGLE_CART_HIDDEN)
+  return { type: cartActionTypes.TOGGLE_CART_HIDDEN };
+}
+
+export function addItem(item) {
+  return {type: cartActionTypes.ADD_ITEM, payload: item}
 }
