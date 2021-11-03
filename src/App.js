@@ -4,7 +4,10 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import "./App.css";
 import Header from "./components/header/header.component";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument
+} from "./firebase/firebase.utils";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -25,9 +28,8 @@ function App(props) {
             ...snapshot.data(),
           });
         });
-      } else {
-        setCurrentUser(null);
       }
+      setCurrentUser(null);
     });
 
     return () => unsubscribeFromAuth();
@@ -39,7 +41,7 @@ function App(props) {
       <Switch>
         <Route path="/" component={HomePage} exact />
         <Route path="/shop" component={ShopPage} />
-        <Route path="/checkout" component={CheckoutPage} exact/>
+        <Route path="/checkout" component={CheckoutPage} exact />
         <Route
           exact
           path="/signin"
