@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import WithSpinner from "../../components/with-spinner/with-spinner.component";
-import { selectCollection } from "../../redux/shop/shop.selectors";
+import { selectCollection, selectIsCollectionsLoaded } from "../../redux/shop/shop.selectors";
 import "./collection.styles.scss";
 
-function CollectionPage({ collection, ...otherProps }) {
-  console.log({ otherProps });
+function CollectionPage({ collection, isCollectionsLoaded }) {
+  console.log({ isCollectionsLoaded: isCollectionsLoaded });
   if (!collection) {
     return <WithSpinner />;
   }
@@ -26,9 +26,9 @@ function CollectionPage({ collection, ...otherProps }) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps)
   return {
     collection: selectCollection(ownProps.match.params.collectionId)(state),
+    isCollectionsLoaded: selectIsCollectionsLoaded(state)
   };
 };
 
