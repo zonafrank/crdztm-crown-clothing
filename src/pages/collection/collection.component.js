@@ -7,7 +7,7 @@ import "./collection.styles.scss";
 
 function CollectionPage({ collection, isCollectionsLoaded }) {
   console.log({ isCollectionsLoaded: isCollectionsLoaded });
-  if (!collection) {
+  if (!isCollectionsLoaded) {
     return <WithSpinner />;
   }
 

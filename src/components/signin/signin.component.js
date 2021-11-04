@@ -11,7 +11,6 @@ function SignIn() {
     e.preventDefault();
     signInWithGoogle()
       .then((response) => {
-        // console.log(response)
         setLoginData({email: "", password: ""})
       })
       .catch((err) => console.log);
