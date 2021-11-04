@@ -1,39 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import "./App.css";
 import Header from "./components/header/header.component";
-import {
-  auth,
-  createUserProfileDocument
-} from "./firebase/firebase.utils";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import SignInAndSignUpPage from "./pages/signin-and-signup/signin-and-signup.component";
-import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 
 function App(props) {
-  const { setCurrentUser } = props;
-
-  useEffect(() => {
-    const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot((snapshot) => {
-          setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data(),
-          });
-        });
-      }
-      setCurrentUser(null);
-    });
-
-    return () => unsubscribeFromAuth();
-  }, [setCurrentUser]);
+  console.log(props);
 
   return (
     <div className="App">
@@ -54,14 +32,8 @@ function App(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-  };
-};
-
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
