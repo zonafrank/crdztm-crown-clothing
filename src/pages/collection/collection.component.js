@@ -6,7 +6,6 @@ import { selectCollection, selectIsCollectionsLoaded } from "../../redux/shop/sh
 import "./collection.styles.scss";
 
 function CollectionPage({ collection, isCollectionsLoaded }) {
-  console.log({ isCollectionsLoaded: isCollectionsLoaded });
   if (!isCollectionsLoaded) {
     return <WithSpinner />;
   }
