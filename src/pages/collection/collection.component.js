@@ -1,11 +1,25 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import WithSpinner from "../../components/with-spinner/with-spinner.component";
-import { selectCollection, selectIsCollectionsLoaded } from "../../redux/shop/shop.selectors";
+import {
+  selectCollection,
+  selectIsCollectionsLoaded
+} from "../../redux/shop/shop.selectors";
 import "./collection.styles.scss";
 
-function CollectionPage({ collection, isCollectionsLoaded }) {
+function CollectionPage(props) {
+  const params = useParams();
+  
+  const collection = useSelector((state) =>
+    selectCollection(params.collectionId)(state)
+  );
+
+  const isCollectionsLoaded = useSelector((state) =>
+    selectIsCollectionsLoaded(state)
+  );
+
   if (!isCollectionsLoaded) {
     return <WithSpinner />;
   }
@@ -24,11 +38,4 @@ function CollectionPage({ collection, isCollectionsLoaded }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    collection: selectCollection(ownProps.match.params.collectionId)(state),
-    isCollectionsLoaded: selectIsCollectionsLoaded(state)
-  };
-};
-
-export default connect(mapStateToProps)(CollectionPage);
+export default CollectionPage;
