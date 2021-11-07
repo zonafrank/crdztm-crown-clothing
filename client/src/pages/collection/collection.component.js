@@ -10,11 +10,9 @@ import {
 import "./collection.styles.scss";
 
 function CollectionPage(props) {
-  const params = useParams();
+  const {collectionId} = useParams();
   
-  const collection = useSelector((state) =>
-    selectCollection(params.collectionId)(state)
-  );
+  const collection = useSelector(selectCollection(collectionId));
 
   const isCollectionsLoaded = useSelector((state) =>
     selectIsCollectionsLoaded(state)

@@ -1,20 +1,32 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
-  emailSignInStart, googleSignInStart
+  emailSignInStart,
+  googleSignInStart
 } from "../../redux/user/user.actions";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input-component";
 import "./signin.styles.scss";
 
-function SignIn({ googleSignInStart, emailSignInStart }) {
+function SignIn() {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  const loggedInUser = useSelector(selectCurrentUser)
+  
+
+  if (loggedInUser) {
+    history.push("/")
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
     const { email, password } = loginData;
-    emailSignInStart(email, password);
-    setLoginData({ email: "", password: "" })
+    dispatch(emailSignInStart({ email, password }));
+    setLoginData({ email: "", password: "" });
   }
 
   function handleChange(e) {
@@ -51,7 +63,7 @@ function SignIn({ googleSignInStart, emailSignInStart }) {
           <CustomButton type="submit">Sign In</CustomButton>
           <CustomButton
             type="button"
-            onClick={googleSignInStart}
+            onClick={() => dispatch(googleSignInStart)}
             isGoogleSignIn
           >
             Sign In With Google
@@ -62,10 +74,4 @@ function SignIn({ googleSignInStart, emailSignInStart }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  googleSignInStart: () => dispatch(googleSignInStart()),
-  emailSignInStart: (email, password) =>
-    dispatch(emailSignInStart({ email, password })),
-});
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;
