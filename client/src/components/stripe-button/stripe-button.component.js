@@ -8,7 +8,6 @@ function StripeCheckoutButton({ price }) {
     "pk_test_51JreYRAXb01R7AiLJEMTqEXTFsAsfYyMDatLiFwmoFaqA8iIqlQ2pVksvi6IA381BDlPrhXG1SCbr3zDuUglb4kf00tEKJ0rDT";
 
   const onToken = (token) => {
-    console.log(token);
     axios({
       url: "payment",
       method: "post",
