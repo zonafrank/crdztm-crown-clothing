@@ -20,10 +20,16 @@ function ShopPage({ match }) {
     dispatch(fetchCollectionsStart());
   }, [dispatch]);
 
+  
   if (isFetching) {
     return <WithSpinner />;
   }
 
+  function throwError() {
+    throw Error
+  }
+
+  throwError();
   return (
     <div className="shop-page">
       <Suspense fallback={<WithSpinner />}>
